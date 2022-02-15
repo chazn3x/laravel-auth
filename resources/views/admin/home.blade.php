@@ -14,7 +14,9 @@
                         </div>
                     @endif
 
-                    {{ __('You are logged in!') }}
+                    <h3>Benvenuto {{ Auth::user()->name }}! 💻</h3>
+
+                    <p>Dai un'occhiata ai <a href="{{route('posts.index')}}">nuovi post</a>.</p>
                 </div>
             </div>
         </div>

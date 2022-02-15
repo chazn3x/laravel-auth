@@ -7,11 +7,17 @@
             @foreach ($posts as $post)
                 <div class="card mb-5">
                     <div class="card-header">
-                        {{ $post->title }}
+                        <span class="text-muted">{{$post->created_at}}</span>
                     </div>
-
+                    
                     <div class="card-body">
-                        {{ $post->content }}
+                        <h5 class="card-title">{{ $post->title }}</h5>
+                        <p class="card-text">
+                            {{ $post->content }}
+                        </p>
+                        <div class="text-right">
+                            <a href="{{route('posts.show', $post->slug)}}" class="btn btn-primary">Leggi post</a>
+                        </div>
                     </div>
                 </div>
             @endforeach
