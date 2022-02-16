@@ -54,7 +54,7 @@
                     </form>
                 </div>
             </div>
-            <a href="{{route('posts.index')}}" class="btn btn-primary">Torna indietro</a>
+            <a href="{{route('posts.index')}}" class="btn btn-primary">Torna ai post</a>
         </div>
     </div>
 </div>

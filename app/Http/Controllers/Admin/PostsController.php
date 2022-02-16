@@ -123,7 +123,7 @@ class PostsController extends Controller
         
         $post->save();
 
-        return redirect()->route('posts.index');
+        return redirect()->route('posts.show', $post);
     }
 
     /**
