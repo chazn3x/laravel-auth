@@ -37,7 +37,7 @@ class PostsController extends Controller
      */
     public function create()
     {
-        //
+        return view( 'admin.posts.create' );
     }
 
     /**
@@ -48,7 +48,35 @@ class PostsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        
+        // Validazione dati
+        $request->validate($this->validations);
+        
+        // Creazione del post
+        $data = $request->all();
+
+        $newPost = new Post();
+        
+        $newPost->title = $data['title'];
+        $newPost->content = $data['content'];
+        $newPost->published = isset($data['published']);
+
+        $slug = Str::of($newPost->title)->slug('-');
+        
+        $i = 1;
+        while ( Post::where('slug', $slug)->first() ) {
+
+            $slug = Str::of($newPost->title)->slug('-') . "-{$i}";
+            $i++;
+
+        }
+
+        $newPost->slug = $slug;
+
+        $newPost->save();
+
+        // Redirect al post
+        return redirect()->route('posts.show', $newPost->id);
     }
 
     /**

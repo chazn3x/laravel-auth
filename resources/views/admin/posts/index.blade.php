@@ -4,6 +4,9 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-6">
+            <div class="text-right mb-3">
+                <a href="{{ route( 'posts.create') }}" class="btn btn-primary">Nuovo post</a>
+            </div>
             @foreach ($posts as $post)
                 <div class="card mb-5">
                     <div class="card-header">
