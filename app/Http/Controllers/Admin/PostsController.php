@@ -76,9 +76,23 @@ class PostsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Post $post)
     {
-        //
+
+        // dd($request->all()['_method']);
+
+        $data = $request->all();
+
+        // if ($data['_method'] === 'PATCH') {
+
+            
+        // }
+        
+        $post->published = isset( $data['published'] );
+        
+        $post->save();
+
+        return redirect()->route('posts.index');
     }
 
     /**
