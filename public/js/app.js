@@ -37270,6 +37270,23 @@ module.exports = function(module) {
 
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
+if (document.getElementById('_update')) {
+  var form = document.getElementById('_update');
+  var published = document.getElementById('published');
+  var save = document.getElementById('save');
+  save.addEventListener('click', function (e) {
+    e.preventDefault();
+    published.value = '';
+    form.submit();
+  });
+  var publish = document.getElementById('publish');
+  publish.addEventListener('click', function (e) {
+    e.preventDefault();
+    published.value = '1';
+    form.submit();
+  });
+}
+
 /***/ }),
 
 /***/ "./resources/js/bootstrap.js":

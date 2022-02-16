@@ -19,13 +19,15 @@
                             {{-- Status --}}
                             <div class="col-2">
                                 <div class="_status">
-                                    @if ( !$post->published )
+                                    @if ( $post->published )
+                                        <span class="badge badge-success">Online</span>
+                                    @else
                                         <span class="badge badge-secondary">Bozza</span>
                                     @endif
                                 </div>
                             </div>
 
-                            {{-- Icons --}}
+                            {{-- Actions --}}
                             <div class="col-5 text-right">
                                 <div class="_actions">
 
@@ -46,7 +48,7 @@
                                     @endif
 
                                     {{-- Edit --}}
-                                    <a href="#" title="Modifica post" class="mx-2 text-decoration-none">
+                                    <a href="{{ route( 'posts.edit', $post->id ) }}" title="Modifica post" class="mx-2 text-decoration-none">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-fill" viewBox="0 0 16 16">
                                             <path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z"/>
                                         </svg>
@@ -75,7 +77,7 @@
                             {{ substr( $post->content, 0, 70 ) . ( strlen( $post->content ) > 70 ? '...' : '' ) }}
                         </p>
                         <div class="text-right">
-                            <a href="{{ route( 'posts.show', $post->slug) }}" class="btn btn-primary">Leggi post</a>
+                            <a href="{{ route( 'posts.show', $post->id) }}" class="btn btn-primary">Leggi post</a>
                         </div>
                     </div>
                 </div>

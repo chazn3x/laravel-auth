@@ -4,12 +4,20 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Post;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 
 use function GuzzleHttp\Promise\all;
 
 class PostsController extends Controller
 {
+
+    // Validation rules
+    protected $validations = [
+        'title' => 'required|string|max:100',
+        'content' => 'required|string'
+    ];
+
     /**
      * Display a listing of the resource.
      *
@@ -49,10 +57,8 @@ class PostsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($slug)
+    public function show(Post $post)
     {
-
-        $post = Post::where('slug', $slug)->first();
 
         return view('admin.posts.show', compact('post'));
 
@@ -64,9 +70,9 @@ class PostsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Post $post)
     {
-        //
+        return view('admin.posts.edit', compact('post'));
     }
 
     /**
@@ -79,14 +85,39 @@ class PostsController extends Controller
     public function update(Request $request, Post $post)
     {
 
-        // dd($request->all()['_method']);
-
         $data = $request->all();
 
-        // if ($data['_method'] === 'PATCH') {
+        // Se il metodo è PUT modifico tutto il post, altrimenti aggiorno solo lo stato di pubblicazione
+        if ($data['_method'] === 'PUT') {
 
+            // Validazione
+            $request->validate($this->validations);
+
+            // Se cambia il titolo
+            if ( $post->title != $data['title'] ) {
+
+                $post->title = $data['title'];
             
-        // }
+                $slug = Str::of($post->title)->slug('-');
+    
+                // Se cambia lo slug
+                if ($post->slug != $slug) {
+    
+                    $i = 1;
+                    while ( Post::where('slug', $slug)->first() ) {
+                        
+                        $slug = Str::of($post->title)->slug('-') . "-{$i}";
+                        $i++;
+                        
+                    }
+                    
+                    $post->slug = $slug;
+    
+                }
+
+            }
+            
+        }
         
         $post->published = isset( $data['published'] );
         
